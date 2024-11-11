@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --text-color: #333;
+            --bg-color: #fff;
+            --section-bg: #f8f9fa;
+            --card-bg: #fff;
+        }
+
+        .dark-mode {
+            --text-color: #fff;
+            --bg-color: #1a1a1a;
+            --section-bg: #2d2d2d;
+            --card-bg: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: var(--text-color);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .dark-mode-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .mode-icon {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .mode-icon .sun,
+        .mode-icon .moon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s, opacity 0.3s;
+        }
+
+        .mode-icon .sun {
+            opacity: 0;
+            transform: translateY(20px) rotate(90deg);
+            color: #ff9800;
+        }
+
+        .mode-icon .moon {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+            color: #5c6bc0;
+        }
+
+        .dark-mode .mode-icon .sun {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+        }
+
+        .dark-mode .mode-icon .moon {
+            opacity: 0;
+            transform: translateY(-20px) rotate(-90deg);
+        }
+
+        section {
+            padding: 5rem 2rem;
+            min-height: 100vh;
+            background-color: var(--section-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            text-align: left;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary-color);
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--bg-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                padding: 2rem 0;
+                gap: 2rem;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+                border-radius: 100px;
+            }
+            .skills-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .skill-icon {
+            width: 100px;
+            height: 100px;
+            background-color: #222;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .skill-icon img {
+            width: 80%;
+            height: 80%;
+        }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">Portfolio</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <div class="mode-icon">
+                    <i class="fas fa-sun sun"></i>
+                    <i class="fas fa-moon moon"></i>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="container hero-content">
+            <img src="images/nirjal.png" alt="Profile Picture" class="profile-image">
+            <div class="hero-text">
+                <h1>Nirjal Pikalmunde</h1>
+                <p>Software Engineer | Full Stack Developer</p>
+                <p>I'm passionate about creating efficient, scalable, and user-friendly applications. With expertise in both frontend and backend technologies, I bring ideas to life through code.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>What I Fiddle With...</h2>
+            <div class="skills-grid">
+                <div class="skill-icon">
+                    <img src="images/c.png" alt="C">
+                </div>
+                <div class="skill-icon">
+                    <img src="images/c++.png" alt="C++">
+                </div>
+                <div class="skill-icon">
+                    <img src="images/html.png" alt="HTML">
+                </div>
+                <div class="skill-icon">
+                    <img src="images/css.png" alt="CSS">
+                </div>
+                <div class="skill-icon">
+                    <img src="images/ipostgresql.png" alt="postgre">
+                </div>
+                <div class="skill-icon">
+                    <img src="images/python.png" alt="Python">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-stack e-commerce solution built with MERN stack.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Task Management App</h3>
+                    <p>A Django-based project management tool with real-time updates.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Weather Dashboard</h3>
+                    <p>A responsive weather application using OpenWeather API.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <a href="mailto:nirjalpikalmunde25@gmail.com">nirjalpikalmunde25@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/johndoe" target="_blank">linkedin.com/in/johndoe</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/johndoe" target="_blank">github.com/johndoe</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <h3>Twitter</h3>
+                    <a href="https://twitter.com/johndoe" target="_blank">@johndoe</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Get references to the DOM elements
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+// Check for saved dark mode preference
+const isDarkModeEnabled = localStorage.getItem('darkMode') === 'enabled';
+if (isDarkModeEnabled) {
+    body.classList.add('dark-mode');
+}
+
+// Add an event listener to the toggle button
+darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    // Update local storage based on the current mode
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        localStorage.removeItem('darkMode');
+    }
+});
+</script>
